@@ -39,6 +39,12 @@ func NewBlockchain() *Blockchain {
 	return bc
 }
 
+func (bc *Blockchain) CreateBlock(nonce int, previousHash string) *Block {
+	b := NewBlock(nonce, previousHash)
+	bc.chain = append(bc.chain, b)
+	return b
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
