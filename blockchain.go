@@ -14,11 +14,11 @@ type Block struct {
 	transactions []string
 }
 
-func NewBlock(nonce int, previoutHash string) *Block {
+func NewBlock(nonce int, previousHash string) *Block {
 	b := new(Block)
 	b.timestamp = time.Now().UnixNano()
 	b.nonce = nonce
-	b.previousHash = previoutHash
+	b.previousHash = previousHash
 	return b
 }
 
