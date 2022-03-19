@@ -59,6 +59,10 @@ func init() {
 }
 
 func main() {
-	b := NewBlock(0, "init hash")
-	b.Print()
+	blockChain := NewBlockchain()
+	blockChain.Print()
+	blockChain.CreateBlock(5, "hash 1")
+	blockChain.Print()
+	blockChain.CreateBlock(2, "hash 2")
+	blockChain.Print()
 }
