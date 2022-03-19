@@ -6,6 +6,13 @@ import (
 	"time"
 )
 
+type Block struct {
+	timestamp    int64
+	nonce        int
+	previousHash string
+	transactions []string
+}
+
 func NewBlock(nonce int, previoutHash string) *Block {
 	b := new(Block)
 	b.timestamp = time.Now().UnixNano()
