@@ -33,6 +33,12 @@ type Blockchain struct {
 	chain           []*Block
 }
 
+func NewBlockchain() *Blockchain {
+	bc := new(Blockchain)
+	bc.CreateBlock(0, "Init hash")
+	return bc
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
