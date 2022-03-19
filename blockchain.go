@@ -28,6 +28,11 @@ func (b *Block) Print() {
 	fmt.Printf("transactions        %s\n", b.transactions)
 }
 
+type Blockchain struct {
+	transactionPool []string
+	chain           []*Block
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
