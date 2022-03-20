@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+// ProofOfWorkのチェックの際の000xxxxxの個数
+const MINING_DIFFICULTY = 3
+
 /*
  * Block
  */
