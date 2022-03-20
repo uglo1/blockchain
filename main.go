@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/uglo1/blockchain/block"
 	"github.com/uglo1/blockchain/wallet"
 )
 
