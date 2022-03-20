@@ -113,11 +113,11 @@ func (bc *Blockchain) AddTransaction(sender string, recipient string, value floa
 	}
 
 	if bc.VerifyTransactionSignature(senderPublickey, s, t) {
-		// 残高不足
-		if bc.CalculateTotalAmount(sender) < value {
-			log.Println("ERROR: Not enough belance in a wallet")
-			return false
-		}
+		// // 残高不足
+		// if bc.CalculateTotalAmount(sender) < value {
+		// 	log.Println("ERROR: Not enough belance in a wallet")
+		// 	return false
+		// }
 
 		bc.transactionPool = append(bc.transactionPool, t)
 		return true
