@@ -9,8 +9,11 @@ import (
 	"time"
 )
 
-// ProofOfWorkのチェックの際の000xxxxxの個数
-const MINING_DIFFICULTY = 3
+const (
+	MINING_DIFFICULTY = 3 // ProofOfWorkのチェックの際の000xxxxxの個数
+	MINING_SENDER     = "THE BLOCKCHAIN"
+	MINING_REWARD     = 1.0
+)
 
 /*
  * Block
@@ -64,13 +67,15 @@ func (b *Block) MarshalJSON() ([]byte, error) {
  * Blockchain
  */
 type Blockchain struct {
-	transactionPool []*Transaction
-	chain           []*Block
+	transactionPool   []*Transaction
+	chain             []*Block
+	blockchainAddress string // サーバー提供者のアドレス(報酬を与えるため)
 }
 
-func NewBlockchain() *Blockchain {
+func NewBlockchain(blockchainAddress string) *Blockchain {
 	b := &Block{}
 	bc := new(Blockchain)
+	bc.blockchainAddress = blockchainAddress
 	bc.CreateBlock(0, b.Hash())
 	return bc
 }
@@ -165,7 +170,8 @@ func init() {
 }
 
 func main() {
-	blockChain := NewBlockchain()
+	myBlockchainAddress := "my_blockchain_addres"
+	blockChain := NewBlockchain(myBlockchainAddress)
 	blockChain.Print()
 
 	previousHash := blockChain.LastBlock().Hash()
