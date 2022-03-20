@@ -133,6 +133,16 @@ func (bc *Blockchain) ProofOfWork() int {
 	return nonce
 }
 
+// サーバー提供者のアドレスに報酬を与え、Transactionに追加
+func (bc *Blockchain) Mining() bool {
+	bc.AddTransaction(MINING_SENDER, bc.blockchainAddress, MINING_REWARD)
+	nonce := bc.ProofOfWork()
+	previousHash := bc.LastBlock().Hash()
+	bc.CreateBlock(nonce, previousHash)
+	log.Println("action=mining, status=success")
+	return true
+}
+
 /*
  * Transaction
  */
@@ -174,16 +184,12 @@ func main() {
 	blockChain := NewBlockchain(myBlockchainAddress)
 	blockChain.Print()
 
-	previousHash := blockChain.LastBlock().Hash()
 	blockChain.AddTransaction("A", "B", 1.0)
-	nonce := blockChain.ProofOfWork()
-	blockChain.CreateBlock(nonce, previousHash)
+	blockChain.Mining()
 	blockChain.Print()
 
 	blockChain.AddTransaction("C", "D", 2.0)
 	blockChain.AddTransaction("X", "Y", 3.0)
-	previousHash = blockChain.LastBlock().Hash()
-	nonce = blockChain.ProofOfWork()
-	blockChain.CreateBlock(nonce, previousHash)
+	blockChain.Mining()
 	blockChain.Print()
 }
