@@ -118,6 +118,16 @@ func (bc *Blockchain) ValidProof(nonce int, previousHash [32]byte, transactions 
 	return guessHashStr[:difficulty] == zeros
 }
 
+func (bc *Blockchain) ProofOfWork() int {
+	transactions := bc.CopyTransactionPool()
+	previoutHash := bc.LastBlock().Hash()
+	nonce := 0
+	for !bc.ValidProof(nonce, previoutHash, transactions, MINING_DIFFICULTY) {
+		nonce += 1
+	}
+	return nonce
+}
+
 /*
  * Transaction
  */
