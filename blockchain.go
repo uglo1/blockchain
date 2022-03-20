@@ -81,6 +81,15 @@ func (bc *Blockchain) Print() {
 	fmt.Printf("%s\n", strings.Repeat("*", 25))
 }
 
+/*
+ * Transaction
+ */
+type Transaction struct {
+	senderBlockchainAddress   string
+	recipentBlockchainAddress string
+	value                     float32
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
