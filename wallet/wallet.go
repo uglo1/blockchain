@@ -17,8 +17,10 @@ type Wallet struct {
 
 func NewWallet() *Wallet {
 	w := new(Wallet)
-	// TODO エラーハンドリング
-	privateKey, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	if err != nil {
+		panic(err)
+	}
 	w.privateKey = privateKey
 	w.publicKey = &w.privateKey.PublicKey
 	return w
