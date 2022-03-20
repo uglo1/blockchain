@@ -81,6 +81,11 @@ func (bc *Blockchain) Print() {
 	fmt.Printf("%s\n", strings.Repeat("*", 25))
 }
 
+func (bc *Blockchain) AddTransaction(sender string, recipient string, value float32) {
+	t := NewTransaction(sender, recipient, value)
+	bc.transactionPool = append(bc.transactionPool, t)
+}
+
 /*
  * Transaction
  */
