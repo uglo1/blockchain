@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+/*
+ * Block
+ */
 type Block struct {
 	timestamp    int64
 	nonce        int
@@ -54,6 +57,9 @@ func (b *Block) MarshalJSON() ([]byte, error) {
 	})
 }
 
+/*
+ * Blockchain
+ */
 type Blockchain struct {
 	transactionPool []*Transaction
 	chain           []*Block
@@ -131,9 +137,12 @@ func main() {
 	blockChain.Print()
 
 	previousHash := blockChain.LastBlock().Hash()
+	blockChain.AddTransaction("A", "B", 1.0)
 	blockChain.CreateBlock(5, previousHash)
 	blockChain.Print()
 
+	blockChain.AddTransaction("C", "D", 2.0)
+	blockChain.AddTransaction("X", "Y", 3.0)
 	previousHash = blockChain.LastBlock().Hash()
 	blockChain.CreateBlock(2, previousHash)
 	blockChain.Print()
