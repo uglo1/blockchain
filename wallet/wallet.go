@@ -5,6 +5,9 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"fmt"
+
+	"github.com/btcsuite/btcutil/base58"
+	"golang.org/x/crypto/ripemd160"
 )
 
 type Wallet struct {
