@@ -90,6 +90,10 @@ type Transaction struct {
 	value                     float32
 }
 
+func NewTransaction(sender string, recipient string, value float32) *Transaction {
+	return &Transaction{sender, recipient, value}
+}
+
 func init() {
 	log.SetPrefix("Blockchain: ")
 }
