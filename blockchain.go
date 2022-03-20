@@ -180,7 +180,7 @@ func init() {
 }
 
 func main() {
-	myBlockchainAddress := "my_blockchain_addres"
+	myBlockchainAddress := "my_blockchain_address"
 	blockChain := NewBlockchain(myBlockchainAddress)
 	blockChain.Print()
 
