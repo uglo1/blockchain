@@ -11,6 +11,9 @@ import (
 	"golang.org/x/crypto/ripemd160"
 )
 
+/*
+ * Wallet
+ */
 type Wallet struct {
 	privateKey        *ecdsa.PrivateKey
 	publicKey         *ecdsa.PublicKey
@@ -89,3 +92,11 @@ func (w *Wallet) PublicKeyStr() string {
 func (w *Wallet) BlockchainAddress() string {
 	return w.blockchainAddress
 }
+
+/*
+ * Transaction
+ */
+/*
+ * Signature
+ */
+
