@@ -142,7 +142,7 @@ func NewTransaction(sender string, recipient string, value float32) *Transaction
 }
 
 func (t *Transaction) Print() {
-	fmt.Printf("%s\n", strings.Repeat("-", 40))
+	fmt.Printf("%s Transaction %s\n", strings.Repeat("-", 20), strings.Repeat("-", 20))
 	fmt.Printf(" sender_blockchain_address        %s\n", t.senderBlockchainAddress)
 	fmt.Printf(" recipient_blockchain_address     %s\n", t.recipentBlockchainAddress)
 	fmt.Printf(" value                            %.1f\n", t.value)
