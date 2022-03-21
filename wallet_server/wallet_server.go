@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"log"
@@ -9,6 +10,7 @@ import (
 	"strconv"
 	"text/template"
 
+	"github.com/uglo1/blockchain/block"
 	"github.com/uglo1/blockchain/utils"
 	"github.com/uglo1/blockchain/wallet"
 )
@@ -87,6 +89,30 @@ func (ws *WalletServer) CreateTransaction(w http.ResponseWriter, req *http.Reque
 		}
 		value32 := float32(value)
 
+		w.Header().Add("Content-Type", "application/json")
+
+		// Signatureを作成
+		transaction := wallet.NewTransaction(privateKey, publicKey,
+			*t.SenderBlockchainAddress, *t.RecipientBlockchainAddress, value32)
+		signature := transaction.GenerateSignature()
+		signatureStr := signature.String()
+
+		// ブロックチェーンノードへのTransactionRequestを作成
+		bt := &block.TransactionRequest{
+			SenderBlockchainAddress:    t.SenderBlockchainAddress,
+			RecipientBlockchainAddress: t.RecipientBlockchainAddress,
+			SenderPublicKey:            t.SenderPublicKey,
+			Value:                      &value32,
+			Signature:                  &signatureStr,
+		}
+		m, _ := json.Marshal(bt)
+		buf := bytes.NewBuffer(m)
+
+		resp, _ := http.Post(ws.Gateway()+"/transactions", "application/json", buf)
+		if resp.StatusCode == 201 {
+			io.WriteString(w, string(utils.JsonStatus("success")))
+		}
+		io.WriteString(w, string(utils.JsonStatus("fail")))
 	default:
 		w.WriteHeader(http.StatusBadRequest)
 		log.Println("ERROR: Invalid HTTP Method")
