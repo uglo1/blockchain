@@ -5,6 +5,9 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/uglo1/blockchain/block"
+	"github.com/uglo1/blockchain/wallet"
 )
 
 type BlockchainServer struct {
