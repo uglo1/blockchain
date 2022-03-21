@@ -15,6 +15,10 @@ import (
 
 const tempDir = "templates"
 
+/*
+ * WalletServer
+ */
+
 type WalletServer struct {
 	port    uint16
 	gateway string

@@ -10,6 +10,10 @@ import (
 	"github.com/uglo1/blockchain/wallet"
 )
 
+/*
+ * BlockchainServer
+ */
+
 type BlockchainServer struct {
 	port uint16
 }
