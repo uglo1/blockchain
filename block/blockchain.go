@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/uglo1/blockchain/utils"
@@ -75,6 +76,7 @@ type Blockchain struct {
 	chain             []*Block
 	blockchainAddress string // サーバー提供者のアドレス(報酬を与えるため)
 	port              uint16
+	mux               sync.Mutex // ロックをかける
 }
 
 func NewBlockchain(blockchainAddress string, port uint16) *Blockchain {
@@ -191,6 +193,14 @@ func (bc *Blockchain) ProofOfWork() int {
 
 // サーバー提供者のアドレスに報酬を与え、Transactionに追加
 func (bc *Blockchain) Mining() bool {
+	bc.mux.Lock()
+	defer bc.mux.Unlock()
+
+	// マイニングする必要がないのに報酬が与えられることを防止
+	if len(bc.transactionPool) == 0 {
+		return false
+	}
+
 	bc.AddTransaction(MINING_SENDER, bc.blockchainAddress, MINING_REWARD, nil, nil)
 	nonce := bc.ProofOfWork()
 	previousHash := bc.LastBlock().Hash()
