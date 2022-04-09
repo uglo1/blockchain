@@ -313,9 +313,9 @@ func (bc *Blockchain) Mining() bool {
 	defer bc.mux.Unlock()
 
 	// マイニングする必要がないのに報酬が与えられることを防止
-	if len(bc.transactionPool) == 0 {
-		return false
-	}
+	// if len(bc.transactionPool) == 0 {
+	// 	return false
+	// }
 
 	bc.AddTransaction(MINING_SENDER, bc.blockchainAddress, MINING_REWARD, nil, nil)
 	nonce := bc.ProofOfWork()
