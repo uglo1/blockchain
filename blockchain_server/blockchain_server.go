@@ -16,11 +16,11 @@ import (
  * BlockchainServer
  */
 
+var cache map[string]*block.Blockchain = make(map[string]*block.Blockchain)
+
 type BlockchainServer struct {
 	port uint16
 }
-
-var cache map[string]*block.Blockchain = make(map[string]*block.Blockchain)
 
 func NewBlockchainServer(port uint16) *BlockchainServer {
 	return &BlockchainServer{port}
@@ -34,7 +34,7 @@ func (bcs *BlockchainServer) GetBlockchain() *block.Blockchain {
 	bc, ok := cache["blockchain"]
 	if !ok {
 		minersWallet := wallet.NewWallet()
-		bc := block.NewBlockchain(minersWallet.BlockchainAddress(), bcs.Port())
+		bc = block.NewBlockchain(minersWallet.BlockchainAddress(), bcs.Port())
 		cache["blockchain"] = bc
 		// REMOVE LATER
 		log.Printf("private_key %v", minersWallet.PrivateKeyStr())
@@ -44,7 +44,7 @@ func (bcs *BlockchainServer) GetBlockchain() *block.Blockchain {
 	return bc
 }
 
-func (bcs *BlockchainServer) Getchain(w http.ResponseWriter, req *http.Request) {
+func (bcs *BlockchainServer) GetChain(w http.ResponseWriter, req *http.Request) {
 	switch req.Method {
 	case http.MethodGet:
 		w.Header().Add("Content-Type", "application/json")
@@ -89,10 +89,10 @@ func (bcs *BlockchainServer) Transactions(w http.ResponseWriter, req *http.Reque
 
 		// transactionの作成をし、statusを返す
 		publicKey := utils.PublicKeyFromString(*t.SenderPublicKey)
-		signagure := utils.SignatureFromString(*t.Signature)
+		signature := utils.SignatureFromString(*t.Signature)
 		bc := bcs.GetBlockchain()
 		isCreated := bc.CreateTransaction(*t.SenderBlockchainAddress,
-			*t.RecipientBlockchainAddress, *t.Value, publicKey, signagure)
+			*t.RecipientBlockchainAddress, *t.Value, publicKey, signature)
 
 		w.Header().Add("Content-Type", "application/json")
 		var m []byte
@@ -163,7 +163,9 @@ func (bcs *BlockchainServer) Amount(w http.ResponseWriter, req *http.Request) {
 }
 
 func (bcs *BlockchainServer) Run() {
-	http.HandleFunc("/", bcs.Getchain)
+	bcs.GetBlockchain().Run()
+
+	http.HandleFunc("/", bcs.GetChain)
 	http.HandleFunc("/transactions", bcs.Transactions)
 	http.HandleFunc("/mine", bcs.Mine)            // 手動マイニング
 	http.HandleFunc("/mine/start", bcs.StartMine) // 自動マイニング
