@@ -133,6 +133,10 @@ func NewBlockchain(blockchainAddress string, port uint16) *Blockchain {
 	return bc
 }
 
+func (bc *Blockchain) Chain() []*Block {
+	return bc.chain
+}
+
 func (bc *Blockchain) Run() {
 	bc.StartSyncNeighbors()
 }
