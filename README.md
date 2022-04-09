@@ -23,19 +23,21 @@ $ go1.18 run main.go blockchain_server.go -port 5003
 
 ##### 2. open blowser
 
-- wallets
-http://0.0.0.0:8080/
+- wallets  
+http://0.0.0.0:8080/  
 http://0.0.0.0:8081/ 
+<br>  
+
+- transactions  
+http://0.0.0.0:5001/transactions  
+http://0.0.0.0:5002/transactions  
+http://0.0.0.0:5003/transactions  
 <br>
-- transactions
-http://0.0.0.0:5001/transactions
-http://0.0.0.0:5002/transactions
-http://0.0.0.0:5003/transactions
-<br>
-- chain
-http://0.0.0.0:5001/
-http://0.0.0.0:5002/
-http://0.0.0.0:5003/
+
+- chain  
+http://0.0.0.0:5001/  
+http://0.0.0.0:5002/  
+http://0.0.0.0:5003/  
 
 ##### 3. set parameters
 In a terminal on port 5001, copy the Public Key, Private Key, and Blockchain Address displayed after executing the command(``` $ go1.18 run main.go blockchain_server.go -port 5001```), and enter each in the browser form at http://0.0.0.0:8080/.
@@ -52,5 +54,5 @@ http://0.0.0.0:5001/mine
 
 When you run the link above, mining occurs and the transactions are applied to the server's blockchain.
 
-confirm the chain.
+confirm the chain.  
 http://0.0.0.0:5001/
